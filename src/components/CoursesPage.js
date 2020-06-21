@@ -1,28 +1,35 @@
+import { getCourses } from "../api/courseApi";
 import React from "react";
-class CoursesPages extends React.Component {
+import { handleError } from "../api/apiUtils";
+class CoursesPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { title: "" };
-    this.onChange = this.onChange.bind(this);
+    this.state = {
+      courses: [],
+    };
   }
-
-  //   onChange = (event) => {
-  //     this.setState({ title: event.target.value });
-  //   };
-
-  onChange = function (event) {
-    this.setState({ title: event.target.value });
-  };
+  componentDidMount() {
+    //making Api call after component mounted
+    getCourses()
+      .then((courses) => this.setState({ courses: courses }))
+      .catch(handleError);
+  }
   render() {
     return (
       <div>
-        <span>
-          {this.props.name}:{this.state.title}
-        </span>
-        <br />
-        <input value={this.state.title} onChange={this.onChange}></input>
+        <h2>Courses</h2>
+        <div>
+          {this.state.courses.map((c) => {
+            return (
+              <div key={c.id}>
+                <span>{c.title}</span>
+                <br />
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
 }
-export default CoursesPages;
+export default CoursesPage;
