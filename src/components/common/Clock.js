@@ -4,8 +4,17 @@ class Clock extends React.Component {
     super(props);
     this.state = { date: new Date() };
   }
+  componentDidMount() {
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+  tick() {
+    this.setState({ date: new Date() });
+  }
+  componentWillUnmount() {
+    clearInterval(this.timerId);
+  }
   render() {
-    return <div>It's: {this.state.date.toLocaleTimeString()} </div>;
+    return <div>It's: {this.state.date.toLocaleTimeString()}</div>;
   }
 }
 export default Clock;
