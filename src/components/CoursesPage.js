@@ -1,35 +1,28 @@
 import { getCourses } from "../api/courseApi";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { handleError } from "../api/apiUtils";
-class CoursesPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      courses: [],
-    };
-  }
-  componentDidMount() {
-    //making Api call after component mounted
+function CoursesPage() {
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
     getCourses()
-      .then((courses) => this.setState({ courses: courses }))
+      .then((_courses) => setCourses(_courses))
       .catch(handleError);
-  }
-  render() {
-    return (
+  }, []);
+
+  return (
+    <div>
+      <h2>Courses</h2>
       <div>
-        <h2>Courses</h2>
-        <div>
-          {this.state.courses.map((c) => {
-            return (
-              <div key={c.id}>
-                <span>{c.title}</span>
-                <br />
-              </div>
-            );
-          })}
-        </div>
+        {courses.map((c) => {
+          return (
+            <div key={c.id}>
+              <span>{c.title}</span>
+              <br />
+            </div>
+          );
+        })}
       </div>
-    );
-  }
+    </div>
+  );
 }
 export default CoursesPage;
