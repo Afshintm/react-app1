@@ -4,8 +4,7 @@ function CourseTable(props) {
   console.log(props.courseList);
   return (
     <div>
-      <h2>Course details:</h2>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Id</th>
@@ -19,7 +18,7 @@ function CourseTable(props) {
               <tr key={item.id}>
                 <th>{item.id}</th>
                 <th>{item.title}</th>
-                <th>{item.id}</th>
+                <th>{item.authourId}</th>
               </tr>
             );
           })}
